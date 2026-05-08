@@ -2,6 +2,8 @@ import { useState } from "react"
 
 import { useNavigate } from "react-router-dom"
 
+import toast from "react-hot-toast"
+
 import { login } from "../services/authService"
 
 const LoginPage = () => {
@@ -30,6 +32,10 @@ const LoginPage = () => {
       localStorage.setItem(
         "token",
         data.access_token
+      )
+
+      toast.success(
+        "Login successful"
       )
 
       navigate("/")

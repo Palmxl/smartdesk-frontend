@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import toast from "react-hot-toast"
 
 import MainLayout from "../layouts/MainLayout"
 
@@ -45,6 +46,9 @@ const TicketsPage = () => {
 
     ws.onmessage = () => {
       loadTickets()
+      toast.success(
+        "Tickets updated"
+      )
     }
 
     return () => {

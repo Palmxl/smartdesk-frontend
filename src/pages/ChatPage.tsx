@@ -4,6 +4,8 @@ import {
   useState,
 } from "react"
 
+import toast from "react-hot-toast"
+
 import MainLayout from "../layouts/MainLayout"
 
 import { useAuth } from "../hooks/useAuth"
@@ -31,6 +33,9 @@ const ChatPage = () => {
     ws.current.onmessage = (
       event
     ) => {
+      toast.success(
+        "New message received"
+      )
 
       setMessages((prev) => [
         ...prev,
