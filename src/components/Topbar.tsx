@@ -39,6 +39,18 @@ const Topbar = () => {
 
         <p className="text-gray-500">
           {user?.username}
+          <span
+            className="
+                ml-2
+                bg-gray-200
+                px-2
+                py-1
+                rounded
+                text-xs
+            "
+            >
+            {user?.role}
+          </span>
         </p>
 
       </div>

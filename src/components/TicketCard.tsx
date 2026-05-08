@@ -2,6 +2,8 @@ import type { Ticket } from "../types/ticket"
 
 import Badge from "./Badge"
 
+import { useAuth } from "../hooks/useAuth"
+
 import {
   getPriorityColor,
   getSentimentColor,
@@ -20,6 +22,8 @@ const TicketCard = ({
   ticket,
   onStatusChange,
 }: Props) => {
+
+  const user = useAuth()
 
   return (
     <div className="border rounded-lg p-4 bg-white">
@@ -60,35 +64,39 @@ const TicketCard = ({
 
       </div>
 
-      <div className="mt-4">
+      {user?.role === "admin" && (
 
-        <button
-          onClick={() =>
-            onStatusChange(
-              ticket.id,
+        <div className="mt-4">
+
+          <button
+            onClick={() =>
+              onStatusChange(
+                ticket.id,
+                ticket.status === "Open"
+                  ? "Closed"
+                  : "Open"
+              )
+            }
+            className="
+              bg-black
+              text-white
+              px-3
+              py-1
+              rounded
+            "
+          >
+
+            Mark as {
               ticket.status === "Open"
                 ? "Closed"
                 : "Open"
-            )
-          }
-          className="
-            bg-black
-            text-white
-            px-3
-            py-1
-            rounded
-          "
-        >
+            }
 
-          Mark as {
-            ticket.status === "Open"
-              ? "Closed"
-              : "Open"
-          }
+          </button>
 
-        </button>
+        </div>
 
-      </div>
+      )}
 
     </div>
   )

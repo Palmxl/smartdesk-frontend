@@ -2,6 +2,7 @@ import { jwtDecode } from "jwt-decode"
 
 interface TokenPayload {
   sub: string
+  role: string
 }
 
 export const useAuth = () => {
@@ -18,5 +19,6 @@ export const useAuth = () => {
 
   return {
     username: decoded.sub,
+    role: decoded.role,
   }
 }
