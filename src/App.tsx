@@ -7,6 +7,7 @@ import {
 import DashboardPage from "./pages/DashboardPage"
 import TicketsPage from "./pages/TicketsPage"
 import LoginPage from "./pages/LoginPage"
+import ChatPage from "./pages/ChatPage"
 
 import ProtectedRoute from "./routes/ProtectedRoute"
 
@@ -36,6 +37,15 @@ function App() {
           element={
             <ProtectedRoute>
               <TicketsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/chat"
+          element={
+            <ProtectedRoute>
+              <ChatPage />
             </ProtectedRoute>
           }
         />

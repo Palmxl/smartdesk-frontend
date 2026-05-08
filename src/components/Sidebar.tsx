@@ -1,6 +1,7 @@
 import {
   LayoutDashboard,
   Ticket,
+  MessageSquare,
 } from "lucide-react"
 
 import { Link } from "react-router-dom"
@@ -53,6 +54,20 @@ const Sidebar = () => {
           <Ticket size={20} />
 
           Tickets
+        </Link>
+
+        <Link
+          to="/chat"
+          className="
+            flex
+            items-center
+            gap-2
+            hover:text-gray-300
+          "
+        >
+          <MessageSquare size={20} />
+
+          Chat
         </Link>
 
       </nav>
