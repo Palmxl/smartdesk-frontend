@@ -26,6 +26,9 @@ const ChatPage = () => {
   const [messages, setMessages] =
     useState<string[]>([])
 
+  const [onlineUsers, setOnlineUsers] = 
+    useState(0)
+
   useEffect(() => {
 
     const loadMessages =
@@ -46,12 +49,26 @@ const ChatPage = () => {
     loadMessages()
 
     ws.current = new WebSocket(
-      "ws://127.0.0.1:8000/chat"
+      `ws://127.0.0.1:8000/chat/${user?.username}`
     )
 
     ws.current.onmessage = (
       event
     ) => {
+
+      if (
+        event.data.startsWith(
+          "ONLINE_USERS:"
+        )
+      ) {
+
+        const count =
+          event.data.split(":")[1]
+
+        setOnlineUsers(Number(count))
+
+        return
+      }  
 
       toast.success(
         "New message received"
@@ -94,6 +111,10 @@ const ChatPage = () => {
       <h1 className="text-3xl font-bold mb-6">
         Team Chat
       </h1>
+
+      <p className="text-green-600 mb-4">
+        {onlineUsers} users online
+      </p>
 
       <div
         className="
