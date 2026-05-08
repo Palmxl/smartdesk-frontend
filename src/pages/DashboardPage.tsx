@@ -5,6 +5,12 @@ import MainLayout from "../layouts/MainLayout"
 import type { Ticket } from "../types/ticket"
 import { getTickets } from "../services/ticketService"
 import CreateTicketForm from "../components/CreateTicketForm"
+import Badge from "../components/Badge"
+
+import {
+  getPriorityColor,
+  getSentimentColor,
+} from "../utils/ticketStyles"
 
 const DashboardPage = () => {
 
@@ -19,58 +25,110 @@ const DashboardPage = () => {
     setTickets(data)
   }
 
-  return (
-    <MainLayout>
+  const totalTickets = tickets.length
 
-      <h1 className="text-3xl font-bold mb-6">
-        Dashboard
-      </h1>
+  const highPriorityTickets =
+    tickets.filter(
+      (ticket) => ticket.priority === "High"
+    ).length
 
-      <CreateTicketForm
-        onTicketCreated={loadTickets}
-      />
-      
-      <div className="bg-white rounded-xl p-4 shadow">
+    return (
+        <MainLayout>
 
-        <h2 className="text-xl font-semibold mb-4">
-          Tickets
-        </h2>
+            <h1 className="text-3xl font-bold mb-6">
+                Dashboard
+            </h1>
 
-        <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4 mb-6">
 
-          {tickets.map((ticket) => (
-            <div
-              key={ticket.id}
-              className="border rounded-lg p-4"
-            >
-              <h3 className="font-bold">
-                {ticket.title}
-              </h3>
+                <div className="bg-white p-4 rounded-xl shadow">
 
-              <p className="text-gray-600">
-                {ticket.description}
-              </p>
+                    <h2 className="text-gray-500">
+                        Total Tickets
+                    </h2>
 
-              <div className="flex gap-2 mt-2">
+                    <p className="text-3xl font-bold">
+                        {totalTickets}
+                    </p>
 
-                <span className="bg-red-100 text-red-700 px-2 py-1 rounded text-sm">
-                  {ticket.priority}
-                </span>
+                </div>
 
-                <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-sm">
-                  {ticket.status}
-                </span>
+                <div className="bg-white p-4 rounded-xl shadow">
 
-              </div>
+                    <h2 className="text-gray-500">
+                        High Priority
+                    </h2>
+
+                    <p className="text-3xl font-bold text-red-600">
+                        {highPriorityTickets}
+                    </p>
+
+                </div>
+
             </div>
-          ))}
 
-        </div>
+            <CreateTicketForm
+                onTicketCreated={loadTickets}
+            />
 
-      </div>
+            <div className="bg-white rounded-xl p-4 shadow">
 
-    </MainLayout>
-  )
+                <h2 className="text-xl font-semibold mb-4">
+                    Tickets
+                </h2>
+
+                <div className="space-y-4">
+
+                    {tickets.map((ticket) => (
+
+                        <div key={ticket.id} className="border rounded-lg p-4">
+
+                            <h3 className="font-bold text-lg">
+                                {ticket.title}
+                            </h3>
+
+                            <p className="text-gray-600 mt-1">
+                                {ticket.description}
+                            </p>
+
+                            <div className="flex gap-2 mt-3 flex-wrap">
+
+                                <Badge
+                                    text={ticket.priority}
+                                    color={getPriorityColor(
+                                    ticket.priority
+                                    )}
+                                />
+
+                                <Badge
+                                    text={ticket.sentiment}
+                                    color={getSentimentColor(
+                                    ticket.sentiment
+                                    )}
+                                />
+
+                                <Badge
+                                    text={ticket.category}
+                                    color="bg-blue-100 text-blue-700"
+                                />
+
+                                <Badge
+                                    text={ticket.status}
+                                    color="bg-gray-100 text-gray-700"
+                                />
+
+                            </div>
+
+                        </div>
+
+                    ))}
+
+                </div>
+
+            </div>
+
+        </MainLayout>
+    )
 }
 
 export default DashboardPage

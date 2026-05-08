@@ -4,4 +4,6 @@ export interface Ticket {
   description: string
   priority: string
   status: string
+  sentiment: string
+  category: string
 }
