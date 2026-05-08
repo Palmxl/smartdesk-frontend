@@ -4,6 +4,7 @@ import MainLayout from "../layouts/MainLayout"
 
 import type { Ticket } from "../types/ticket"
 import { getTickets } from "../services/ticketService"
+import CreateTicketForm from "../components/CreateTicketForm"
 
 const DashboardPage = () => {
 
@@ -25,6 +26,10 @@ const DashboardPage = () => {
         Dashboard
       </h1>
 
+      <CreateTicketForm
+        onTicketCreated={loadTickets}
+      />
+      
       <div className="bg-white rounded-xl p-4 shadow">
 
         <h2 className="text-xl font-semibold mb-4">
