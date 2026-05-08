@@ -6,6 +6,8 @@ import type { Ticket } from "../types/ticket"
 
 import { getTickets } from "../services/ticketService"
 
+import TicketsChart from "../components/TicketsChart"
+
 const DashboardPage = () => {
 
   const [tickets, setTickets] =
@@ -34,6 +36,12 @@ const DashboardPage = () => {
     tickets.filter(
       (ticket) =>
         ticket.status === "Closed"
+    ).length
+
+  const lowPriorityTickets =
+    tickets.filter(
+      (ticket) =>
+        ticket.priority === "Low"
     ).length
 
   return (
@@ -80,6 +88,15 @@ const DashboardPage = () => {
           </p>
 
         </div>
+
+      </div>
+
+      <div className="mt-6">
+
+        <TicketsChart
+          high={highPriorityTickets}
+          low={lowPriorityTickets}
+        />
 
       </div>
 
