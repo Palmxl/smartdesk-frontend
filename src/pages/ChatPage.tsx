@@ -10,6 +10,8 @@ import MainLayout from "../layouts/MainLayout"
 
 import { useAuth } from "../hooks/useAuth"
 
+import { getMessages } from "../services/chatService"
+
 const ChatPage = () => {
 
   const user = useAuth()
@@ -26,6 +28,23 @@ const ChatPage = () => {
 
   useEffect(() => {
 
+    const loadMessages =
+      async () => {
+
+        const data =
+          await getMessages()
+
+        const formatted =
+          data.map(
+            (msg: any) =>
+              `${msg.username}: ${msg.content}`
+          )
+
+        setMessages(formatted)
+      }
+
+    loadMessages()
+
     ws.current = new WebSocket(
       "ws://127.0.0.1:8000/chat"
     )
@@ -33,6 +52,7 @@ const ChatPage = () => {
     ws.current.onmessage = (
       event
     ) => {
+
       toast.success(
         "New message received"
       )
