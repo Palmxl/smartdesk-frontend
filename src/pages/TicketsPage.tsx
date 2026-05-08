@@ -2,6 +2,10 @@ import { useEffect, useState } from "react"
 
 import MainLayout from "../layouts/MainLayout"
 
+import TicketsTable from "../components/TicketsTable"
+
+import CreateTicketForm from "../components/CreateTicketForm"
+
 import type { Ticket } from "../types/ticket"
 
 import {
@@ -9,14 +13,13 @@ import {
   updateTicketStatus,
 } from "../services/ticketService"
 
-import CreateTicketForm from "../components/CreateTicketForm"
-
-import TicketCard from "../components/TicketCard"
-
 const TicketsPage = () => {
 
   const [tickets, setTickets] =
     useState<Ticket[]>([])
+
+  const [loading, setLoading] =
+    useState(true)
 
   const [search, setSearch] =
     useState("")
@@ -30,9 +33,13 @@ const TicketsPage = () => {
 
   const loadTickets = async () => {
 
+    setLoading(true)
+
     const data = await getTickets()
 
     setTickets(data)
+
+    setLoading(false)
   }
 
   const handleStatusChange = async (
@@ -117,21 +124,44 @@ const TicketsPage = () => {
         onTicketCreated={loadTickets}
       />
 
-      <div className="space-y-4">
+      {loading ? (
 
-        {filteredTickets.map((ticket) => (
+        <div
+          className="
+            bg-white
+            p-8
+            rounded-xl
+            shadow
+            text-center
+          "
+        >
+          Loading tickets...
+        </div>
 
-          <TicketCard
-            key={ticket.id}
-            ticket={ticket}
-            onStatusChange={
-              handleStatusChange
-            }
-          />
+      ) : filteredTickets.length === 0 ? (
 
-        ))}
+        <div
+          className="
+            bg-white
+            p-8
+            rounded-xl
+            shadow
+            text-center
+          "
+        >
+          No tickets found
+        </div>
 
-      </div>
+      ) : (
+
+        <TicketsTable
+          tickets={filteredTickets}
+          onStatusChange={
+            handleStatusChange
+          }
+        />
+
+      )}
 
     </MainLayout>
   )
