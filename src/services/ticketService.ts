@@ -18,3 +18,21 @@ export const createTicket = async (
 
   return response.data
 }
+
+export const updateTicketStatus = async (
+  ticketId: number,
+  status: string
+) => {
+
+  const response = await api.put(
+    `/tickets/${ticketId}/status`,
+    null,
+    {
+      params: {
+        status,
+      },
+    }
+  )
+
+  return response.data
+}
