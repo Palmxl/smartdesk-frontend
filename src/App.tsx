@@ -6,6 +6,9 @@ import {
 
 import DashboardPage from "./pages/DashboardPage"
 import TicketsPage from "./pages/TicketsPage"
+import LoginPage from "./pages/LoginPage"
+
+import ProtectedRoute from "./routes/ProtectedRoute"
 
 function App() {
 
@@ -15,13 +18,26 @@ function App() {
       <Routes>
 
         <Route
+          path="/login"
+          element={<LoginPage />}
+        />
+
+        <Route
           path="/"
-          element={<DashboardPage />}
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/tickets"
-          element={<TicketsPage />}
+          element={
+            <ProtectedRoute>
+              <TicketsPage />
+            </ProtectedRoute>
+          }
         />
 
       </Routes>
