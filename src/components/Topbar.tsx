@@ -36,6 +36,8 @@ const Topbar = () => {
       className="
         bg-white
         dark:bg-gray-800
+        text-black
+        dark:text-white
         rounded-xl
         shadow
         p-4
@@ -57,7 +59,7 @@ const Topbar = () => {
           dark:text-gray-300
         ">
 
-          {user?.username}
+          {user?.sub}
 
           <span
             className="
@@ -88,6 +90,8 @@ const Topbar = () => {
             rounded
             bg-gray-200
             dark:bg-gray-700
+            hover:bg-gray-300
+            dark:hover:bg-gray-600
           "
         >
 
@@ -105,7 +109,9 @@ const Topbar = () => {
             items-center
             gap-2
             bg-black
+            dark:bg-white
             text-white
+            dark:text-black
             px-4
             py-2
             rounded

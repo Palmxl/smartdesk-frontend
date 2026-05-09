@@ -1,6 +1,7 @@
-import { jwtDecode } from "jwt-decode"
+import { jwtDecode }
+  from "jwt-decode"
 
-interface TokenPayload {
+interface User {
   sub: string
   role: string
 }
@@ -8,17 +9,27 @@ interface TokenPayload {
 export const useAuth = () => {
 
   const token =
-    localStorage.getItem("token")
+    localStorage.getItem(
+      "token"
+    )
 
   if (!token) {
     return null
   }
 
-  const decoded =
-    jwtDecode<TokenPayload>(token)
+  try {
 
-  return {
-    username: decoded.sub,
-    role: decoded.role,
+    const decoded =
+      jwtDecode<User>(token)
+
+    return decoded
+
+  } catch {
+
+    localStorage.removeItem(
+      "token"
+    )
+
+    return null
   }
 }

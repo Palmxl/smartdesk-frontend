@@ -23,7 +23,8 @@ const Sidebar = () => {
         top-0
         p-6
         border-r
-        border-gray-800
+        border-gray-300
+        dark:border-gray-800
       "
     >
 
@@ -41,7 +42,8 @@ const Sidebar = () => {
             gap-2
             p-2
             rounded-lg
-            hover:bg-gray-800
+            hover:bg-gray-200
+            dark:hover:bg-gray-800
             transition
           "
         >
@@ -60,7 +62,8 @@ const Sidebar = () => {
             gap-2
             p-2
             rounded-lg
-            hover:bg-gray-800
+            hover:bg-gray-200
+            dark:hover:bg-gray-800
             transition
           "
         >
@@ -79,7 +82,8 @@ const Sidebar = () => {
             gap-2
             p-2
             rounded-lg
-            hover:bg-gray-800
+            hover:bg-gray-200
+            dark:hover:bg-gray-800
             transition
           "
         >
@@ -98,7 +102,8 @@ const Sidebar = () => {
             gap-2
             p-2
             rounded-lg
-            hover:bg-gray-800
+            hover:bg-gray-200
+            dark:hover:bg-gray-800
             transition
           "
         > 
@@ -117,7 +122,8 @@ const Sidebar = () => {
             gap-2
             p-2
             rounded-lg
-            hover:bg-gray-800
+            hover:bg-gray-200
+            dark:hover:bg-gray-800
             transition
           "
         >

@@ -3,6 +3,9 @@ import {
   useState,
 } from "react"
 
+import toast
+  from "react-hot-toast"
+
 import {
   DragDropContext,
   Droppable,
@@ -32,7 +35,26 @@ const KanbanPage = () => {
     useState<Ticket[]>([])
 
   useEffect(() => {
+
     loadTickets()
+
+    const ws = new WebSocket(
+      "ws://127.0.0.1:8000/tickets/ws"
+    )
+
+    ws.onmessage = () => {
+
+      loadTickets()
+
+      toast.success(
+        "Kanban updated"
+      )
+    }
+
+    return () => {
+      ws.close()
+    }
+
   }, [])
 
   const loadTickets = async () => {
@@ -69,7 +91,8 @@ const KanbanPage = () => {
     )
 
     const newStatus =
-      result.destination.droppableId
+      result.destination
+        .droppableId
 
     await updateTicketStatus(
       ticketId,
@@ -80,19 +103,38 @@ const KanbanPage = () => {
   }
 
   return (
+
     <MainLayout>
 
-      <h1 className="text-3xl font-bold mb-6">
+      <h1
+        className="
+          text-3xl
+          font-bold
+          mb-6
+          text-black
+          dark:text-white
+        "
+      >
 
         Kanban Board
 
       </h1>
 
       <DragDropContext
-        onDragEnd={handleDragEnd}
+        onDragEnd={
+          handleDragEnd
+        }
       >
 
-        <div className="grid grid-cols-3 gap-6">
+        <div
+          className="
+            grid
+            grid-cols-1
+            md:grid-cols-2
+            xl:grid-cols-3
+            gap-6
+          "
+        >
 
           {columns.map((column) => (
 
@@ -104,21 +146,39 @@ const KanbanPage = () => {
               {(provided) => (
 
                 <div
-                  ref={provided.innerRef}
+                  ref={
+                    provided.innerRef
+                  }
 
-                  {...provided.droppableProps}
+                  {
+                    ...provided
+                      .droppableProps
+                  }
 
                   className="
-                    bg-gray-100
+                    bg-gray-200
                     dark:bg-gray-800
                     rounded-xl
                     p-4
                     min-h-[600px]
+                    border
+                    border-gray-200
+                    dark:border-gray-700
+                    shadow-sm
                   "
                 >
 
-                  <h2 className="font-bold mb-4">
+                  <h2
+                    className="
+                      font-bold
+                      mb-4
+                      text-black
+                      dark:text-white
+                    "
+                  >
+
                     {column}
+
                   </h2>
 
                   <div className="space-y-4">
@@ -150,20 +210,35 @@ const KanbanPage = () => {
                                 provided.innerRef
                               }
 
-                              {...provided.draggableProps}
+                              {
+                                ...provided
+                                  .draggableProps
+                              }
 
-                              {...provided.dragHandleProps}
+                              {
+                                ...provided
+                                  .dragHandleProps
+                              }
 
                               className="
                                 bg-white
                                 dark:bg-gray-700
+                                text-black
+                                dark:text-white
                                 p-4
                                 rounded-lg
                                 shadow
+                                border
+                                border-gray-200
+                                dark:border-gray-600
                               "
                             >
 
-                              <h3 className="font-semibold">
+                              <h3
+                                className="
+                                  font-semibold
+                                "
+                              >
 
                                 {ticket.title}
 
@@ -178,14 +253,18 @@ const KanbanPage = () => {
                                 "
                               >
 
-                                {ticket.description}
+                                {
+                                  ticket.description
+                                }
 
                               </p>
 
                               <div className="mt-4">
 
                                 <select
-                                  value={ticket.status}
+                                  value={
+                                    ticket.status
+                                  }
 
                                   onChange={(e) =>
                                     handleMove(
@@ -196,11 +275,18 @@ const KanbanPage = () => {
 
                                   className="
                                     border
+                                    border-gray-300
                                     dark:border-gray-600
+                                    bg-white
                                     dark:bg-gray-800
+                                    text-black
+                                    dark:text-white
                                     p-2
                                     rounded
                                     w-full
+                                    focus:outline-none
+                                    focus:ring-2
+                                    focus:ring-blue-500
                                   "
                                 >
 
@@ -233,7 +319,9 @@ const KanbanPage = () => {
 
                       ))}
 
-                    {provided.placeholder}
+                    {
+                      provided.placeholder
+                    }
 
                   </div>
 

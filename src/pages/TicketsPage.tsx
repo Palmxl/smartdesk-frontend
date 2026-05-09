@@ -1,13 +1,22 @@
-import { useEffect, useState } from "react"
-import toast from "react-hot-toast"
+import {
+  useEffect,
+  useState,
+} from "react"
 
-import MainLayout from "../layouts/MainLayout"
+import toast
+  from "react-hot-toast"
 
-import TicketsTable from "../components/TicketsTable"
+import MainLayout
+  from "../layouts/MainLayout"
 
-import CreateTicketForm from "../components/CreateTicketForm"
+import TicketsTable
+  from "../components/TicketsTable"
 
-import type { Ticket } from "../types/ticket"
+import CreateTicketForm
+  from "../components/CreateTicketForm"
+
+import type { Ticket }
+  from "../types/ticket"
 
 import {
   getTickets,
@@ -25,11 +34,15 @@ const TicketsPage = () => {
   const [search, setSearch] =
     useState("")
 
-  const [priorityFilter, setPriorityFilter] =
-    useState("All")
+  const [
+    priorityFilter,
+    setPriorityFilter,
+  ] = useState("All")
 
-  const [currentPage, setCurrentPage] =
-    useState(1)
+  const [
+    currentPage,
+    setCurrentPage,
+  ] = useState(1)
 
   const [sortBy, setSortBy] =
     useState("newest")
@@ -41,11 +54,13 @@ const TicketsPage = () => {
     loadTickets()
 
     const ws = new WebSocket(
-      "ws://127.0.0.1:8000/ws"
+      "ws://127.0.0.1:8000/tickets/ws"
     )
 
     ws.onmessage = () => {
+
       loadTickets()
+
       toast.success(
         "Tickets updated"
       )
@@ -61,25 +76,27 @@ const TicketsPage = () => {
 
     setLoading(true)
 
-    const data = await getTickets()
+    const data =
+      await getTickets()
 
     setTickets(data)
 
     setLoading(false)
   }
 
-  const handleStatusChange = async (
-    ticketId: number,
-    status: string
-  ) => {
+  const handleStatusChange =
+    async (
+      ticketId: number,
+      status: string
+    ) => {
 
-    await updateTicketStatus(
-      ticketId,
-      status
-    )
+      await updateTicketStatus(
+        ticketId,
+        status
+      )
 
-    loadTickets()
-  }
+      loadTickets()
+    }
 
   const filteredTickets =
     tickets.filter((ticket) => {
@@ -92,12 +109,15 @@ const TicketsPage = () => {
           )
 
       const matchesPriority =
+
         priorityFilter === "All"
-        || ticket.priority === priorityFilter
+
+        || ticket.priority
+          === priorityFilter
 
       return (
-        matchesSearch &&
-        matchesPriority
+        matchesSearch
+        && matchesPriority
       )
     })
 
@@ -159,13 +179,32 @@ const TicketsPage = () => {
     )
 
   return (
+
     <MainLayout>
 
-      <h1 className="text-3xl font-bold mb-6">
+      <h1
+        className="
+          text-3xl
+          font-bold
+          mb-6
+          text-black
+          dark:text-white
+        "
+      >
+
         Tickets
+
       </h1>
 
-      <div className="flex gap-4 mb-6">
+      <div
+        className="
+          flex
+          flex-col
+          md:flex-row
+          gap-4
+          mb-6
+        "
+      >
 
         <input
           type="text"
@@ -174,7 +213,19 @@ const TicketsPage = () => {
           onChange={(e) =>
             setSearch(e.target.value)
           }
-          className="border p-2 rounded w-full"
+          className="
+            border
+            border-gray-300
+            dark:border-gray-700
+            p-2
+            rounded
+            w-full
+            bg-white
+            dark:bg-gray-800
+            text-black
+            dark:text-white
+            placeholder-gray-400
+          "
         />
 
         <select
@@ -184,7 +235,17 @@ const TicketsPage = () => {
               e.target.value
             )
           }
-          className="border p-2 rounded"
+          className="
+            border
+            border-gray-300
+            dark:border-gray-700
+            p-2
+            rounded
+            bg-white
+            dark:bg-gray-800
+            text-black
+            dark:text-white
+          "
         >
 
           <option value="All">
@@ -208,7 +269,17 @@ const TicketsPage = () => {
               e.target.value
             )
           }
-          className="border p-2 rounded"
+          className="
+            border
+            border-gray-300
+            dark:border-gray-700
+            p-2
+            rounded
+            bg-white
+            dark:bg-gray-800
+            text-black
+            dark:text-white
+          "
         >
 
           <option value="newest">
@@ -228,7 +299,9 @@ const TicketsPage = () => {
       </div>
 
       <CreateTicketForm
-        onTicketCreated={loadTickets}
+        onTicketCreated={
+          loadTickets
+        }
       />
 
       {loading ? (
@@ -236,13 +309,18 @@ const TicketsPage = () => {
         <div
           className="
             bg-white
+            dark:bg-gray-800
+            text-black
+            dark:text-white
             p-8
             rounded-xl
             shadow
             text-center
           "
         >
+
           Loading tickets...
+
         </div>
 
       ) : filteredTickets.length === 0 ? (
@@ -250,20 +328,28 @@ const TicketsPage = () => {
         <div
           className="
             bg-white
+            dark:bg-gray-800
+            text-black
+            dark:text-white
             p-8
             rounded-xl
             shadow
             text-center
           "
         >
+
           No tickets found
+
         </div>
 
       ) : (
 
         <>
+
           <TicketsTable
-            tickets={paginatedTickets}
+            tickets={
+              paginatedTickets
+            }
             onStatusChange={
               handleStatusChange
             }
@@ -293,10 +379,27 @@ const TicketsPage = () => {
                   px-4
                   py-2
                   rounded
+                  transition
+
                   ${
-                    currentPage === index + 1
-                      ? "bg-black text-white"
-                      : "bg-white"
+                    currentPage ===
+                    index + 1
+
+                      ? `
+                        bg-black
+                        dark:bg-white
+                        text-white
+                        dark:text-black
+                      `
+
+                      : `
+                        bg-white
+                        dark:bg-gray-800
+                        text-black
+                        dark:text-white
+                        hover:bg-gray-100
+                        dark:hover:bg-gray-700
+                      `
                   }
                 `}
               >
@@ -308,6 +411,7 @@ const TicketsPage = () => {
             ))}
 
           </div>
+
         </>
 
       )}

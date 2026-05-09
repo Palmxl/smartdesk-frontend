@@ -7,9 +7,11 @@ import {
   ResponsiveContainer,
 } from "recharts"
 
-import type { Ticket } from "../types/ticket"
+import type { Ticket }
+  from "../types/ticket"
 
 interface Props {
+
   tickets: Ticket[]
 }
 
@@ -53,9 +55,13 @@ const AgentPerformanceChart = ({
     )
 
   return (
+
     <div
       className="
         bg-white
+        dark:bg-gray-800
+        text-black
+        dark:text-white
         rounded-xl
         shadow
         p-4
@@ -64,8 +70,16 @@ const AgentPerformanceChart = ({
       "
     >
 
-      <h2 className="text-xl font-semibold mb-4">
+      <h2
+        className="
+          text-xl
+          font-semibold
+          mb-4
+        "
+      >
+
         Agent Workload
+
       </h2>
 
       <ResponsiveContainer
@@ -75,11 +89,27 @@ const AgentPerformanceChart = ({
 
         <BarChart data={groupedData}>
 
-          <XAxis dataKey="agent" />
+          <XAxis
+            dataKey="agent"
+            stroke="#9ca3af"
+          />
 
-          <YAxis />
+          <YAxis
+            stroke="#9ca3af"
+          />
 
-          <Tooltip />
+          <Tooltip
+            contentStyle={{
+              backgroundColor:
+                "#1f2937",
+              border:
+                "none",
+              borderRadius:
+                "12px",
+              color:
+                "#fff",
+            }}
+          />
 
           <Bar dataKey="tickets" />
 

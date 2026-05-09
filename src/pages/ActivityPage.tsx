@@ -22,9 +22,18 @@ const ActivityPage = () => {
   }, [])
 
   return (
+
     <MainLayout>
 
-      <h1 className="text-3xl font-bold mb-6">
+      <h1
+        className="
+          text-3xl
+          font-bold
+          mb-6
+          text-black
+          dark:text-white
+        "
+      >
 
         Activity Logs
 
@@ -34,6 +43,8 @@ const ActivityPage = () => {
         className="
           bg-white
           dark:bg-gray-800
+          text-black
+          dark:text-white
           rounded-xl
           shadow
           p-4
@@ -42,42 +53,71 @@ const ActivityPage = () => {
 
         <div className="space-y-4">
 
-          {logs.map((log) => (
+          {logs.length === 0 ? (
 
             <div
-              key={log.id}
               className="
-                border-b
-                dark:border-gray-700
-                pb-3
+                text-center
+                text-gray-500
+                dark:text-gray-300
+                py-6
               "
             >
 
-              <p className="font-medium">
-                {log.action}
-              </p>
-
-              <p
-                className="
-                  text-sm
-                  text-gray-500
-                  dark:text-gray-300
-                "
-              >
-
-                {log.username}
-                {" • "}
-                {
-                  new Date(
-                    log.created_at
-                  ).toLocaleString()
-                }
-
-              </p>
+              No activity logs yet
 
             </div>
 
-          ))}
+          ) : (
+
+            logs.map((log) => (
+
+              <div
+                key={log.id}
+                className="
+                  border-b
+                  border-gray-200
+                  dark:border-gray-700
+                  pb-3
+                "
+              >
+
+                <p
+                  className="
+                    font-medium
+                  "
+                >
+
+                  {log.action}
+
+                </p>
+
+                <p
+                  className="
+                    text-sm
+                    text-gray-500
+                    dark:text-gray-300
+                    mt-1
+                  "
+                >
+
+                  {log.username}
+
+                  {" • "}
+
+                  {
+                    new Date(
+                      log.created_at
+                    ).toLocaleString()
+                  }
+
+                </p>
+
+              </div>
+
+            ))
+
+          )}
 
         </div>
 

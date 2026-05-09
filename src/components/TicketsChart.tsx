@@ -7,7 +7,9 @@ import {
 } from "recharts"
 
 interface Props {
+
   high: number
+
   low: number
 }
 
@@ -33,10 +35,30 @@ const TicketsChart = ({
   ]
 
   return (
-    <div className="bg-white p-4 rounded-xl shadow h-[400px]">
 
-      <h2 className="text-xl font-semibold mb-4">
+    <div
+      className="
+        bg-white
+        dark:bg-gray-800
+        text-black
+        dark:text-white
+        p-4
+        rounded-xl
+        shadow
+        h-[400px]
+      "
+    >
+
+      <h2
+        className="
+          text-xl
+          font-semibold
+          mb-4
+        "
+      >
+
         Tickets by Priority
+
       </h2>
 
       <ResponsiveContainer
@@ -64,7 +86,18 @@ const TicketsChart = ({
 
           </Pie>
 
-          <Tooltip />
+          <Tooltip
+            contentStyle={{
+              backgroundColor:
+                "#1f2937",
+              border:
+                "none",
+              borderRadius:
+                "12px",
+              color:
+                "#fff",
+            }}
+          />
 
         </PieChart>
 

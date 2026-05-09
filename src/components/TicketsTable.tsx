@@ -51,6 +51,8 @@ const TicketsTable = ({
       className="
         bg-white
         dark:bg-gray-800
+        text-black
+        dark:text-white
         rounded-xl
         shadow
         overflow-hidden
@@ -63,6 +65,7 @@ const TicketsTable = ({
           className="
             bg-gray-100
             dark:bg-gray-700
+            dark:text-gray-200
           "
         >
 
@@ -140,6 +143,7 @@ const TicketsTable = ({
                     className="
                       text-xs
                       text-blue-600
+                      dark:text-blue-400
                       mt-1
                     "
                   >
@@ -212,7 +216,12 @@ const TicketsTable = ({
 
                 <Badge
                   text={ticket.category}
-                  color="bg-blue-100 text-blue-700"
+                  color="
+                    bg-blue-100
+                    text-blue-700
+                    dark:bg-blue-900
+                    dark:text-blue-300
+                  "
                 />
 
               </td>
@@ -264,7 +273,12 @@ const TicketsTable = ({
 
                 <Badge
                   text={ticket.status}
-                  color="bg-gray-100 text-gray-700"
+                  color="
+                    bg-gray-100 
+                    text-gray-700
+                    dark:bg-gray-700
+                    dark:text-gray-200
+                  "
                 />
 
               </td>
@@ -286,10 +300,14 @@ const TicketsTable = ({
                       }
                       className="
                         bg-black
+                        dark:bg-white
+                        text-white
+                        dark:text-black
                         text-white
                         px-3
                         py-1
                         rounded
+                        hover:opacity-90
                       "
                     >
 
@@ -305,6 +323,7 @@ const TicketsTable = ({
                       }
                       className="
                         bg-blue-600
+                        hover:bg-blue-700
                         text-white
                         px-3
                         py-1

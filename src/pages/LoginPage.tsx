@@ -1,14 +1,32 @@
-import { useState } from "react"
+import { useState }
+  from "react"
 
-import { useNavigate } from "react-router-dom"
+import {
+  Moon,
+  Sun,
+} from "lucide-react"
 
-import toast from "react-hot-toast"
+import { useNavigate }
+  from "react-router-dom"
 
-import { login } from "../services/authService"
+import toast
+  from "react-hot-toast"
+
+import { login }
+  from "../services/authService"
+
+import { useTheme }
+  from "../hooks/useTheme"
 
 const LoginPage = () => {
 
-  const navigate = useNavigate()
+  const navigate =
+    useNavigate()
+
+  const {
+    darkMode,
+    toggleTheme,
+  } = useTheme()
 
   const [username, setUsername] =
     useState("")
@@ -44,11 +62,14 @@ const LoginPage = () => {
 
       console.error(error)
 
-      alert("Invalid credentials")
+      toast.error(
+        "Invalid credentials"
+      )
     }
   }
 
   return (
+
     <div
       className="
         min-h-screen
@@ -56,13 +77,44 @@ const LoginPage = () => {
         items-center
         justify-center
         bg-gray-100
+        dark:bg-gray-900
+        transition
+        relative
       "
     >
+
+      <button
+        onClick={toggleTheme}
+        className="
+          absolute
+          top-6
+          right-6
+          p-3
+          rounded-lg
+          bg-white
+          dark:bg-gray-800
+          text-black
+          dark:text-white
+          shadow
+          hover:opacity-90
+          transition
+        "
+      >
+
+        {darkMode
+          ? <Sun size={20} />
+          : <Moon size={20} />
+        }
+
+      </button>
 
       <form
         onSubmit={handleLogin}
         className="
           bg-white
+          dark:bg-gray-800
+          text-black
+          dark:text-white
           p-8
           rounded-xl
           shadow
@@ -78,7 +130,9 @@ const LoginPage = () => {
             text-center
           "
         >
+
           SmartDesk
+
         </h1>
 
         <div className="mb-4">
@@ -88,13 +142,25 @@ const LoginPage = () => {
             placeholder="Username"
             value={username}
             onChange={(e) =>
-              setUsername(e.target.value)
+              setUsername(
+                e.target.value
+              )
             }
             className="
               w-full
               border
+              border-gray-300
+              dark:border-gray-700
+              bg-white
+              dark:bg-gray-700
+              text-black
+              dark:text-white
+              placeholder-gray-400
               p-3
               rounded
+              focus:outline-none
+              focus:ring-2
+              focus:ring-blue-500
             "
           />
 
@@ -107,13 +173,25 @@ const LoginPage = () => {
             placeholder="Password"
             value={password}
             onChange={(e) =>
-              setPassword(e.target.value)
+              setPassword(
+                e.target.value
+              )
             }
             className="
               w-full
               border
+              border-gray-300
+              dark:border-gray-700
+              bg-white
+              dark:bg-gray-700
+              text-black
+              dark:text-white
+              placeholder-gray-400
               p-3
               rounded
+              focus:outline-none
+              focus:ring-2
+              focus:ring-blue-500
             "
           />
 
@@ -124,12 +202,18 @@ const LoginPage = () => {
           className="
             w-full
             bg-black
+            dark:bg-white
             text-white
+            dark:text-black
             py-3
             rounded
+            hover:opacity-90
+            transition
           "
         >
+
           Login
+
         </button>
 
       </form>

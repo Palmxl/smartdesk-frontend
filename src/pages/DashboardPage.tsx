@@ -1,16 +1,25 @@
-import { useEffect, useState } from "react"
+import {
+  useEffect,
+  useState,
+} from "react"
 
-import MainLayout from "../layouts/MainLayout"
+import toast
+  from "react-hot-toast"
 
-import type { Ticket } from "../types/ticket"
+import MainLayout
+  from "../layouts/MainLayout"
 
-import { getTickets } from "../services/ticketService"
+import type { Ticket }
+  from "../types/ticket"
 
-import TicketsChart from "../components/TicketsChart"
+import { getTickets }
+  from "../services/ticketService"
 
-import AIInsights from "../components/AIInsights"
+import TicketsChart
+  from "../components/TicketsChart"
 
-import toast from "react-hot-toast"
+import AIInsights
+  from "../components/AIInsights"
 
 import AgentPerformanceChart
   from "../components/AgentPerformanceChart"
@@ -24,6 +33,7 @@ const DashboardPage = () => {
     useState<Ticket[]>([])
 
   useEffect(() => {
+
     loadTickets()
 
     const ws = new WebSocket(
@@ -44,16 +54,19 @@ const DashboardPage = () => {
     return () => {
       ws.close()
     }
+
   }, [])
 
   const loadTickets = async () => {
 
-    const data = await getTickets()
+    const data =
+      await getTickets()
 
     setTickets(data)
   }
 
-  const totalTickets = tickets.length
+  const totalTickets =
+    tickets.length
 
   const highPriorityTickets =
     tickets.filter(
@@ -78,16 +91,20 @@ const DashboardPage = () => {
       (ticket) => {
 
         return (
+
           ticket.sla_deadline
+
           && new Date(
             ticket.sla_deadline
           ) < new Date()
+
           && ticket.status !== "Closed"
         )
       }
     ).length
 
   return (
+
     <MainLayout>
 
       <div
@@ -99,8 +116,17 @@ const DashboardPage = () => {
         "
       >
 
-        <h1 className="text-3xl font-bold">
+        <h1
+          className="
+            text-3xl
+            font-bold
+            text-black
+            dark:text-white
+          "
+        >
+
           Dashboard
+
         </h1>
 
         <ExportReportButton
@@ -109,12 +135,22 @@ const DashboardPage = () => {
 
       </div>
 
-      <div className="grid grid-cols-4 gap-4">
+      <div
+        className="
+          grid
+          grid-cols-1
+          md:grid-cols-2
+          xl:grid-cols-4
+          gap-4
+        "
+      >
 
         <div
           className="
             bg-white
             dark:bg-gray-800
+            text-black
+            dark:text-white
             p-4
             rounded-xl
             shadow
@@ -132,8 +168,15 @@ const DashboardPage = () => {
 
           </h2>
 
-          <p className="text-3xl font-bold">
+          <p
+            className="
+              text-3xl
+              font-bold
+            "
+          >
+
             {totalTickets}
+
           </p>
 
         </div>
@@ -142,6 +185,8 @@ const DashboardPage = () => {
           className="
             bg-white
             dark:bg-gray-800
+            text-black
+            dark:text-white
             p-4
             rounded-xl
             shadow
@@ -159,8 +204,16 @@ const DashboardPage = () => {
 
           </h2>
 
-          <p className="text-3xl font-bold text-red-600">
+          <p
+            className="
+              text-3xl
+              font-bold
+              text-red-600
+            "
+          >
+
             {highPriorityTickets}
+
           </p>
 
         </div>
@@ -169,6 +222,8 @@ const DashboardPage = () => {
           className="
             bg-white
             dark:bg-gray-800
+            text-black
+            dark:text-white
             p-4
             rounded-xl
             shadow
@@ -186,8 +241,16 @@ const DashboardPage = () => {
 
           </h2>
 
-          <p className="text-3xl font-bold text-green-600">
+          <p
+            className="
+              text-3xl
+              font-bold
+              text-green-600
+            "
+          >
+
             {closedTickets}
+
           </p>
 
         </div>
@@ -196,6 +259,8 @@ const DashboardPage = () => {
           className="
             bg-white
             dark:bg-gray-800
+            text-black
+            dark:text-white
             p-4
             rounded-xl
             shadow
@@ -213,15 +278,23 @@ const DashboardPage = () => {
 
           </h2>
 
-          <p className="text-3xl font-bold text-red-600">
+          <p
+            className="
+              text-3xl
+              font-bold
+              text-red-600
+            "
+          >
+
             {overdueTickets}
+
           </p>
 
         </div>
 
       </div>
 
-      <div className="mt-6">
+      <div className="mt-6 space-y-6">
 
         <TicketsChart
           high={highPriorityTickets}

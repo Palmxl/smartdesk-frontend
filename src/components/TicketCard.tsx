@@ -1,8 +1,11 @@
-import type { Ticket } from "../types/ticket"
+import type { Ticket }
+  from "../types/ticket"
 
-import Badge from "./Badge"
+import Badge
+  from "./Badge"
 
-import { useAuth } from "../hooks/useAuth"
+import { useAuth }
+  from "../hooks/useAuth"
 
 import {
   getPriorityColor,
@@ -10,6 +13,7 @@ import {
 } from "../utils/ticketStyles"
 
 interface Props {
+
   ticket: Ticket
 
   onStatusChange: (
@@ -26,19 +30,26 @@ const TicketCard = ({
   const user = useAuth()
 
   return (
+
     <div
       className="
         border
+        border-gray-200
         dark:border-gray-700
         rounded-lg
         p-4
         bg-white
         dark:bg-gray-800
+        text-black
+        dark:text-white
+        shadow-sm
       "
     >
 
       <h3 className="font-bold text-lg">
+
         {ticket.title}
+
       </h3>
 
       <p
@@ -53,7 +64,14 @@ const TicketCard = ({
 
       </p>
 
-      <div className="flex gap-2 mt-3 flex-wrap">
+      <div
+        className="
+          flex
+          gap-2
+          mt-3
+          flex-wrap
+        "
+      >
 
         <Badge
           text={ticket.priority}
@@ -71,12 +89,22 @@ const TicketCard = ({
 
         <Badge
           text={ticket.category}
-          color="bg-blue-100 text-blue-700"
+          color="
+            bg-blue-100
+            text-blue-700
+            dark:bg-blue-900
+            dark:text-blue-300
+          "
         />
 
         <Badge
           text={ticket.status}
-          color="bg-gray-100 text-gray-700"
+          color="
+            bg-gray-100
+            text-gray-700
+            dark:bg-gray-700
+            dark:text-gray-200
+          "
         />
 
       </div>
@@ -96,14 +124,19 @@ const TicketCard = ({
             }
             className="
               bg-black
+              dark:bg-white
               text-white
+              dark:text-black
               px-3
               py-1
               rounded
+              hover:opacity-90
+              transition
             "
           >
 
             Mark as {
+
               ticket.status === "Open"
                 ? "Closed"
                 : "Open"

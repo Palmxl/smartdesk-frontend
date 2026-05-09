@@ -1,6 +1,14 @@
-import { useState } from "react"
+import { useState }
+  from "react"
+
+import toast
+  from "react-hot-toast"
+
+import { createTicket }
+  from "../services/ticketService"
 
 interface Props {
+
   onTicketCreated: () => void
 }
 
@@ -24,29 +32,14 @@ const CreateTicketForm = ({
 
     try {
 
-      const response = await fetch(
-        "http://127.0.0.1:8000/tickets/",
-        {
-          method: "POST",
-
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
-
-          body: JSON.stringify({
-            title,
-            description,
-          }),
-        }
+      await createTicket(
+        title,
+        description
       )
 
-      if (!response.ok) {
-
-        throw new Error(
-          "Error creating ticket"
-        )
-      }
+      toast.success(
+        "Ticket created"
+      )
 
       setTitle("")
 
@@ -57,15 +50,22 @@ const CreateTicketForm = ({
     } catch (error) {
 
       console.error(error)
+
+      toast.error(
+        "Error creating ticket"
+      )
     }
   }
 
   return (
+
     <form
       onSubmit={handleSubmit}
       className="
         bg-white
         dark:bg-gray-800
+        text-black
+        dark:text-white
         p-4
         rounded-xl
         shadow
@@ -73,8 +73,16 @@ const CreateTicketForm = ({
       "
     >
 
-      <h2 className="text-xl font-bold mb-4">
+      <h2
+        className="
+          text-xl
+          font-bold
+          mb-4
+        "
+      >
+
         Create Ticket
+
       </h2>
 
       <div className="mb-4">
@@ -89,12 +97,19 @@ const CreateTicketForm = ({
           className="
             w-full
             border
+            border-gray-300
             dark:border-gray-700
             p-2
             rounded
             bg-white
             dark:bg-gray-700
+            text-black
             dark:text-white
+            placeholder-gray-400
+            dark:placeholder-gray-400
+            focus:outline-none
+            focus:ring-2
+            focus:ring-blue-500
           "
         />
 
@@ -113,12 +128,19 @@ const CreateTicketForm = ({
           className="
             w-full
             border
+            border-gray-300
             dark:border-gray-700
             p-2
             rounded
             bg-white
             dark:bg-gray-700
+            text-black
             dark:text-white
+            placeholder-gray-400
+            dark:placeholder-gray-400
+            focus:outline-none
+            focus:ring-2
+            focus:ring-blue-500
           "
           rows={5}
         />
@@ -129,10 +151,14 @@ const CreateTicketForm = ({
         type="submit"
         className="
           bg-black
+          dark:bg-white
           text-white
+          dark:text-black
           px-4
           py-2
           rounded
+          hover:opacity-90
+          transition
         "
       >
 

@@ -1,46 +1,104 @@
-import { useEffect, useState }
-  from "react"
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react"
 
-export const useTheme = () => {
+interface ThemeContextType {
+
+  darkMode: boolean
+
+  toggleTheme: () => void
+}
+
+const ThemeContext =
+  createContext<
+    ThemeContextType | undefined
+  >(undefined)
+
+export const ThemeProvider = ({
+  children,
+}: {
+  children: React.ReactNode
+}) => {
 
   const [darkMode, setDarkMode] =
-    useState(
-      localStorage.getItem(
-        "theme"
-      ) === "dark"
-    )
+    useState(false)
 
   useEffect(() => {
 
-    if (darkMode) {
+    const savedTheme =
+      localStorage.getItem(
+        "theme"
+      )
+
+    if (savedTheme === "dark") {
+
+      setDarkMode(true)
 
       document.documentElement
         .classList.add("dark")
-
-      localStorage.setItem(
-        "theme",
-        "dark"
-      )
-
-    } else {
-
-      document.documentElement
-        .classList.remove("dark")
-
-      localStorage.setItem(
-        "theme",
-        "light"
-      )
     }
 
-  }, [darkMode])
+  }, [])
 
   const toggleTheme = () => {
-    setDarkMode(!darkMode)
+
+    setDarkMode((prev) => {
+
+      const newTheme = !prev
+
+      if (newTheme) {
+
+        document.documentElement
+          .classList.add("dark")
+
+        localStorage.setItem(
+          "theme",
+          "dark"
+        )
+
+      } else {
+
+        document.documentElement
+          .classList.remove("dark")
+
+        localStorage.setItem(
+          "theme",
+          "light"
+        )
+      }
+
+      return newTheme
+    })
   }
 
-  return {
-    darkMode,
-    toggleTheme,
+  return (
+    <ThemeContext.Provider
+      value={{
+        darkMode,
+        toggleTheme,
+      }}
+    >
+
+      {children}
+
+    </ThemeContext.Provider>
+  )
+}
+
+export const useTheme = () => {
+
+  const context =
+    useContext(ThemeContext)
+
+  if (!context) {
+
+    throw new Error(
+      "useTheme must be used inside ThemeProvider"
+    )
   }
+
+  return context
 }
