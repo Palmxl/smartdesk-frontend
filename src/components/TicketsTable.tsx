@@ -119,6 +119,29 @@ const TicketsTable = ({
 
                   </p>
 
+                  {ticket.ai_response && (
+
+                    <div
+                      className="
+                        mt-2
+                        bg-gray-100
+                        p-2
+                        rounded
+                      "
+                    >
+
+                      <p className="text-xs font-semibold">
+                        AI Suggested Response
+                      </p>
+
+                      <p className="text-xs text-gray-700 mt-1">
+                        {ticket.ai_response}
+                      </p>
+
+                    </div>
+
+                  )}
+
                 </div>
 
               </td>
@@ -166,6 +189,7 @@ const TicketsTable = ({
                 <div className="flex flex-col gap-2">
 
                   <span className="text-sm">
+
                     {
                       ticket.sla_deadline
                         ? new Date(
@@ -173,6 +197,7 @@ const TicketsTable = ({
                           ).toLocaleString()
                         : "No SLA"
                     }
+
                   </span>
 
                   {ticket.sla_deadline

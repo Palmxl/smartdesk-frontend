@@ -10,4 +10,5 @@ export interface Ticket {
   summary?: string
   created_at: string
   sla_deadline?: string
+  ai_response?: string
 }
