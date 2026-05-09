@@ -6,4 +6,5 @@ export interface Ticket {
   status: string
   sentiment: string
   category: string
+  assigned_to?: string
 }

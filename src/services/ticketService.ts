@@ -36,3 +36,24 @@ export const updateTicketStatus = async (
 
   return response.data
 }
+
+export const assignTicket =
+  async (
+    ticketId: number,
+    assignedTo: string
+  ) => {
+
+    const response =
+      await api.put(
+        `/tickets/${ticketId}/assign`,
+        null,
+        {
+          params: {
+            assigned_to:
+              assignedTo,
+          },
+        }
+      )
+
+    return response.data
+  }

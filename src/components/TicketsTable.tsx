@@ -4,6 +4,8 @@ import Badge from "./Badge"
 
 import { useAuth } from "../hooks/useAuth"
 
+import { assignTicket } from "../services/ticketService"
+
 import {
   getPriorityColor,
   getSentimentColor,
@@ -24,6 +26,25 @@ const TicketsTable = ({
 }: Props) => {
 
   const user = useAuth()
+
+  const handleAssign = async (
+    ticketId: number
+  ) => {
+
+    const assignedTo =
+      prompt("Assign to:")
+
+    if (!assignedTo) {
+      return
+    }
+
+    await assignTicket(
+      ticketId,
+      assignedTo
+    )
+
+    window.location.reload()
+  }
 
   return (
     <div className="bg-white rounded-xl shadow overflow-hidden">
@@ -48,6 +69,10 @@ const TicketsTable = ({
 
             <th className="text-left p-4">
               Category
+            </th>
+
+            <th className="text-left p-4">
+              Assigned
             </th>
 
             <th className="text-left p-4">
@@ -120,6 +145,13 @@ const TicketsTable = ({
 
               <td className="p-4">
 
+                {ticket.assigned_to
+                  || "Unassigned"}
+
+              </td>
+
+              <td className="p-4">
+
                 <Badge
                   text={ticket.status}
                   color="bg-gray-100 text-gray-700"
@@ -131,27 +163,50 @@ const TicketsTable = ({
 
                 {user?.role === "admin" && (
 
-                  <button
-                    onClick={() =>
-                      onStatusChange(
-                        ticket.id,
-                        ticket.status === "Open"
-                          ? "Closed"
-                          : "Open"
-                      )
-                    }
-                    className="
-                      bg-black
-                      text-white
-                      px-3
-                      py-1
-                      rounded
-                    "
-                  >
+                  <div className="flex gap-2">
 
-                    Toggle Status
+                    <button
+                      onClick={() =>
+                        onStatusChange(
+                          ticket.id,
+                          ticket.status === "Open"
+                            ? "Closed"
+                            : "Open"
+                        )
+                      }
+                      className="
+                        bg-black
+                        text-white
+                        px-3
+                        py-1
+                        rounded
+                      "
+                    >
 
-                  </button>
+                      Toggle Status
+
+                    </button>
+
+                    <button
+                      onClick={() =>
+                        handleAssign(
+                          ticket.id
+                        )
+                      }
+                      className="
+                        bg-blue-600
+                        text-white
+                        px-3
+                        py-1
+                        rounded
+                      "
+                    >
+
+                      Assign
+
+                    </button>
+
+                  </div>
 
                 )}
 
