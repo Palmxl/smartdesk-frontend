@@ -3,6 +3,12 @@ import {
   useState,
 } from "react"
 
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+} from "@hello-pangea/dnd"
+
 import MainLayout
   from "../layouts/MainLayout"
 
@@ -50,6 +56,29 @@ const KanbanPage = () => {
     loadTickets()
   }
 
+  const handleDragEnd = async (
+    result: any
+  ) => {
+
+    if (!result.destination) {
+      return
+    }
+
+    const ticketId = Number(
+      result.draggableId
+    )
+
+    const newStatus =
+      result.destination.droppableId
+
+    await updateTicketStatus(
+      ticketId,
+      newStatus
+    )
+
+    loadTickets()
+  }
+
   return (
     <MainLayout>
 
@@ -59,115 +88,166 @@ const KanbanPage = () => {
 
       </h1>
 
-      <div className="grid grid-cols-3 gap-6">
+      <DragDropContext
+        onDragEnd={handleDragEnd}
+      >
 
-        {columns.map((column) => (
+        <div className="grid grid-cols-3 gap-6">
 
-          <div
-            key={column}
-            className="
-              bg-gray-100
-              dark:bg-gray-800
-              rounded-xl
-              p-4
-              min-h-[600px]
-            "
-          >
+          {columns.map((column) => (
 
-            <h2 className="font-bold mb-4">
-              {column}
-            </h2>
+            <Droppable
+              droppableId={column}
+              key={column}
+            >
 
-            <div className="space-y-4">
+              {(provided) => (
 
-              {tickets
-                .filter(
-                  (ticket) =>
-                    ticket.status
-                    === column
-                )
-                .map((ticket) => (
+                <div
+                  ref={provided.innerRef}
 
-                  <div
-                    key={ticket.id}
-                    className="
-                      bg-white
-                      dark:bg-gray-700
-                      p-4
-                      rounded-lg
-                      shadow
-                    "
-                  >
+                  {...provided.droppableProps}
 
-                    <h3 className="font-semibold">
+                  className="
+                    bg-gray-100
+                    dark:bg-gray-800
+                    rounded-xl
+                    p-4
+                    min-h-[600px]
+                  "
+                >
 
-                      {ticket.title}
+                  <h2 className="font-bold mb-4">
+                    {column}
+                  </h2>
 
-                    </h3>
+                  <div className="space-y-4">
 
-                    <p
-                      className="
-                        text-sm
-                        text-gray-500
-                        dark:text-gray-300
-                        mt-1
-                      "
-                    >
+                    {tickets
+                      .filter(
+                        (ticket) =>
+                          ticket.status
+                          === column
+                      )
+                      .map(
+                        (
+                          ticket,
+                          index
+                        ) => (
 
-                      {ticket.description}
+                        <Draggable
+                          draggableId={
+                            ticket.id.toString()
+                          }
+                          index={index}
+                          key={ticket.id}
+                        >
 
-                    </p>
+                          {(provided) => (
 
-                    <div className="mt-4">
+                            <div
+                              ref={
+                                provided.innerRef
+                              }
 
-                      <select
-                        value={ticket.status}
-                        onChange={(e) =>
-                          handleMove(
-                            ticket.id,
-                            e.target.value
-                          )
-                        }
-                        className="
-                          border
-                          dark:border-gray-600
-                          dark:bg-gray-800
-                          p-2
-                          rounded
-                          w-full
-                        "
-                      >
+                              {...provided.draggableProps}
 
-                        {columns.map(
-                          (status) => (
+                              {...provided.dragHandleProps}
 
-                            <option
-                              key={status}
-                              value={status}
+                              className="
+                                bg-white
+                                dark:bg-gray-700
+                                p-4
+                                rounded-lg
+                                shadow
+                              "
                             >
 
-                              {status}
+                              <h3 className="font-semibold">
 
-                            </option>
+                                {ticket.title}
 
-                          )
-                        )}
+                              </h3>
 
-                      </select>
+                              <p
+                                className="
+                                  text-sm
+                                  text-gray-500
+                                  dark:text-gray-300
+                                  mt-1
+                                "
+                              >
 
-                    </div>
+                                {ticket.description}
+
+                              </p>
+
+                              <div className="mt-4">
+
+                                <select
+                                  value={ticket.status}
+
+                                  onChange={(e) =>
+                                    handleMove(
+                                      ticket.id,
+                                      e.target.value
+                                    )
+                                  }
+
+                                  className="
+                                    border
+                                    dark:border-gray-600
+                                    dark:bg-gray-800
+                                    p-2
+                                    rounded
+                                    w-full
+                                  "
+                                >
+
+                                  {columns.map(
+                                    (
+                                      status
+                                    ) => (
+
+                                      <option
+                                        key={status}
+                                        value={status}
+                                      >
+
+                                        {status}
+
+                                      </option>
+
+                                    )
+                                  )}
+
+                                </select>
+
+                              </div>
+
+                            </div>
+
+                          )}
+
+                        </Draggable>
+
+                      ))}
+
+                    {provided.placeholder}
 
                   </div>
 
-                ))}
+                </div>
 
-            </div>
+              )}
 
-          </div>
+            </Droppable>
 
-        ))}
+          ))}
 
-      </div>
+        </div>
+
+      </DragDropContext>
 
     </MainLayout>
   )
