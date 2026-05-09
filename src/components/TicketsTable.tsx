@@ -11,6 +11,10 @@ import {
   getSentimentColor,
 } from "../utils/ticketStyles"
 
+import {
+  useNavigate,
+} from "react-router-dom"
+
 interface Props {
   tickets: Ticket[]
 
@@ -26,6 +30,8 @@ const TicketsTable = ({
 }: Props) => {
 
   const user = useAuth()
+
+  const navigate = useNavigate()
 
   const handleAssign = async (
     ticketId: number
@@ -123,8 +129,23 @@ const TicketsTable = ({
 
                 <div>
 
-                  <h3 className="font-semibold">
+                  <h3
+                    onClick={() =>
+                      navigate(
+                        `/tickets/${ticket.id}`
+                      )
+                    }
+                    className="
+                      font-semibold
+                      cursor-pointer
+                      hover:text-blue-600
+                      dark:hover:text-blue-400
+                      transition
+                    "
+                  >
+
                     {ticket.title}
+
                   </h3>
 
                   <p

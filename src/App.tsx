@@ -11,6 +11,7 @@ import ChatPage from "./pages/ChatPage"
 import KanbanPage from "./pages/KanbanPage"
 import ActivityPage from "./pages/ActivityPage"
 import ProtectedRoute from "./routes/ProtectedRoute"
+import TicketDetailsPage from "./pages/TicketDetailsPage"
 
 function App() {
 
@@ -65,6 +66,15 @@ function App() {
           element={
             <ProtectedRoute>
               <ActivityPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/tickets/:id"
+          element={
+            <ProtectedRoute>
+              <TicketDetailsPage />
             </ProtectedRoute>
           }
         />
