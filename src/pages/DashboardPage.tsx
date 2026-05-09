@@ -8,6 +8,8 @@ import { getTickets } from "../services/ticketService"
 
 import TicketsChart from "../components/TicketsChart"
 
+import AIInsights from "../components/AIInsights"
+
 import AgentPerformanceChart
   from "../components/AgentPerformanceChart"
 
@@ -128,6 +130,10 @@ const DashboardPage = () => {
         />
 
         <AgentPerformanceChart
+          tickets={tickets}
+        />
+
+        <AIInsights
           tickets={tickets}
         />
 
