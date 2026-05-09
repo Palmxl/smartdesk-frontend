@@ -10,6 +10,8 @@ import TicketsChart from "../components/TicketsChart"
 
 import AIInsights from "../components/AIInsights"
 
+import toast from "react-hot-toast"
+
 import AgentPerformanceChart
   from "../components/AgentPerformanceChart"
 
@@ -23,6 +25,25 @@ const DashboardPage = () => {
 
   useEffect(() => {
     loadTickets()
+
+    const ws = new WebSocket(
+      "ws://127.0.0.1:8000/tickets/ws"
+    )
+
+    ws.onmessage = (
+      event
+    ) => {
+
+      toast.success(
+        event.data
+      )
+
+      loadTickets()
+    }
+
+    return () => {
+      ws.close()
+    }
   }, [])
 
   const loadTickets = async () => {
