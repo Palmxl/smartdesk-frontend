@@ -10,9 +10,11 @@ import TicketsChart from "../components/TicketsChart"
 
 import AIInsights from "../components/AIInsights"
 
-import AgentPerformanceChart from "../components/AgentPerformanceChart"
+import AgentPerformanceChart
+  from "../components/AgentPerformanceChart"
 
-import ExportReportButton from "../components/ExportReportButton"
+import ExportReportButton
+  from "../components/ExportReportButton"
 
 const DashboardPage = () => {
 
@@ -67,22 +69,46 @@ const DashboardPage = () => {
   return (
     <MainLayout>
 
-      <h1 className="text-3xl font-bold mb-6">
-        Dashboard
-      </h1>
+      <div
+        className="
+          flex
+          justify-between
+          items-center
+          mb-6
+        "
+      >
 
-      <div className="mb-6">
+        <h1 className="text-3xl font-bold">
+          Dashboard
+        </h1>
+
         <ExportReportButton
           tickets={tickets}
         />
+
       </div>
 
       <div className="grid grid-cols-4 gap-4">
 
-        <div className="bg-white p-4 rounded-xl shadow">
+        <div
+          className="
+            bg-white
+            dark:bg-gray-800
+            p-4
+            rounded-xl
+            shadow
+          "
+        >
 
-          <h2 className="text-gray-500">
+          <h2
+            className="
+              text-gray-500
+              dark:text-gray-300
+            "
+          >
+
             Total Tickets
+
           </h2>
 
           <p className="text-3xl font-bold">
@@ -91,10 +117,25 @@ const DashboardPage = () => {
 
         </div>
 
-        <div className="bg-white p-4 rounded-xl shadow">
+        <div
+          className="
+            bg-white
+            dark:bg-gray-800
+            p-4
+            rounded-xl
+            shadow
+          "
+        >
 
-          <h2 className="text-gray-500">
+          <h2
+            className="
+              text-gray-500
+              dark:text-gray-300
+            "
+          >
+
             High Priority
+
           </h2>
 
           <p className="text-3xl font-bold text-red-600">
@@ -103,10 +144,25 @@ const DashboardPage = () => {
 
         </div>
 
-        <div className="bg-white p-4 rounded-xl shadow">
+        <div
+          className="
+            bg-white
+            dark:bg-gray-800
+            p-4
+            rounded-xl
+            shadow
+          "
+        >
 
-          <h2 className="text-gray-500">
+          <h2
+            className="
+              text-gray-500
+              dark:text-gray-300
+            "
+          >
+
             Closed Tickets
+
           </h2>
 
           <p className="text-3xl font-bold text-green-600">
@@ -115,10 +171,25 @@ const DashboardPage = () => {
 
         </div>
 
-        <div className="bg-white p-4 rounded-xl shadow">
+        <div
+          className="
+            bg-white
+            dark:bg-gray-800
+            p-4
+            rounded-xl
+            shadow
+          "
+        >
 
-          <h2 className="text-gray-500">
+          <h2
+            className="
+              text-gray-500
+              dark:text-gray-300
+            "
+          >
+
             Overdue Tickets
+
           </h2>
 
           <p className="text-3xl font-bold text-red-600">

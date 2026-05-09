@@ -26,7 +26,7 @@ const ChatPage = () => {
   const [messages, setMessages] =
     useState<string[]>([])
 
-  const [onlineUsers, setOnlineUsers] = 
+  const [onlineUsers, setOnlineUsers] =
     useState(0)
 
   useEffect(() => {
@@ -65,10 +65,12 @@ const ChatPage = () => {
         const count =
           event.data.split(":")[1]
 
-        setOnlineUsers(Number(count))
+        setOnlineUsers(
+          Number(count)
+        )
 
         return
-      }  
+      }
 
       toast.success(
         "New message received"
@@ -119,6 +121,7 @@ const ChatPage = () => {
       <div
         className="
           bg-white
+          dark:bg-gray-800
           rounded-xl
           shadow
           p-4
@@ -144,11 +147,14 @@ const ChatPage = () => {
                 key={index}
                 className="
                   bg-gray-100
+                  dark:bg-gray-700
                   p-3
                   rounded
                 "
               >
+
                 {msg}
+
               </div>
 
             )
@@ -170,8 +176,12 @@ const ChatPage = () => {
             className="
               flex-1
               border
+              dark:border-gray-700
               p-3
               rounded
+              bg-white
+              dark:bg-gray-700
+              dark:text-white
             "
           />
 

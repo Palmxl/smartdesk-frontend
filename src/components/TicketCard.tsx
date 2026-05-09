@@ -26,14 +26,31 @@ const TicketCard = ({
   const user = useAuth()
 
   return (
-    <div className="border rounded-lg p-4 bg-white">
+    <div
+      className="
+        border
+        dark:border-gray-700
+        rounded-lg
+        p-4
+        bg-white
+        dark:bg-gray-800
+      "
+    >
 
       <h3 className="font-bold text-lg">
         {ticket.title}
       </h3>
 
-      <p className="text-gray-600 mt-1">
+      <p
+        className="
+          text-gray-600
+          dark:text-gray-300
+          mt-1
+        "
+      >
+
         {ticket.description}
+
       </p>
 
       <div className="flex gap-2 mt-3 flex-wrap">

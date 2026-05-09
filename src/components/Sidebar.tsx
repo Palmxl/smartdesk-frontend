@@ -14,11 +14,14 @@ const Sidebar = () => {
         w-64
         h-screen
         bg-black
+        dark:bg-gray-950
         text-white
         fixed
         left-0
         top-0
         p-6
+        border-r
+        border-gray-800
       "
     >
 
@@ -34,12 +37,17 @@ const Sidebar = () => {
             flex
             items-center
             gap-2
-            hover:text-gray-300
+            p-2
+            rounded-lg
+            hover:bg-gray-800
+            transition
           "
         >
+
           <LayoutDashboard size={20} />
 
           Dashboard
+
         </Link>
 
         <Link
@@ -48,12 +56,17 @@ const Sidebar = () => {
             flex
             items-center
             gap-2
-            hover:text-gray-300
+            p-2
+            rounded-lg
+            hover:bg-gray-800
+            transition
           "
         >
+
           <Ticket size={20} />
 
           Tickets
+
         </Link>
 
         <Link
@@ -62,12 +75,17 @@ const Sidebar = () => {
             flex
             items-center
             gap-2
-            hover:text-gray-300
+            p-2
+            rounded-lg
+            hover:bg-gray-800
+            transition
           "
         >
+
           <MessageSquare size={20} />
 
           Chat
+
         </Link>
 
       </nav>

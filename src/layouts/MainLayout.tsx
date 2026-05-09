@@ -12,13 +12,23 @@ const MainLayout = ({
 }: Props) => {
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div
+      className="
+        bg-gray-100
+        dark:bg-gray-900
+        dark:text-white
+        min-h-screen
+      "
+    >
 
       <Sidebar />
 
       <main className="ml-64 p-6">
+
         <Topbar />
+
         {children}
+
       </main>
 
     </div>

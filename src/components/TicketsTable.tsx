@@ -47,11 +47,24 @@ const TicketsTable = ({
   }
 
   return (
-    <div className="bg-white rounded-xl shadow overflow-hidden">
+    <div
+      className="
+        bg-white
+        dark:bg-gray-800
+        rounded-xl
+        shadow
+        overflow-hidden
+      "
+    >
 
       <table className="w-full">
 
-        <thead className="bg-gray-100">
+        <thead
+          className="
+            bg-gray-100
+            dark:bg-gray-700
+          "
+        >
 
           <tr>
 
@@ -97,7 +110,10 @@ const TicketsTable = ({
 
             <tr
               key={ticket.id}
-              className="border-t"
+              className="
+                border-t
+                dark:border-gray-700
+              "
             >
 
               <td className="p-4">
@@ -108,11 +124,25 @@ const TicketsTable = ({
                     {ticket.title}
                   </h3>
 
-                  <p className="text-sm text-gray-500">
+                  <p
+                    className="
+                      text-sm
+                      text-gray-500
+                      dark:text-gray-300
+                    "
+                  >
+
                     {ticket.description}
+
                   </p>
 
-                  <p className="text-xs text-blue-600 mt-1">
+                  <p
+                    className="
+                      text-xs
+                      text-blue-600
+                      mt-1
+                    "
+                  >
 
                     AI Summary:
                     {ticket.summary}
@@ -125,6 +155,7 @@ const TicketsTable = ({
                       className="
                         mt-2
                         bg-gray-100
+                        dark:bg-gray-700
                         p-2
                         rounded
                       "
@@ -134,8 +165,17 @@ const TicketsTable = ({
                         AI Suggested Response
                       </p>
 
-                      <p className="text-xs text-gray-700 mt-1">
+                      <p
+                        className="
+                          text-xs
+                          text-gray-700
+                          dark:text-gray-300
+                          mt-1
+                        "
+                      >
+
                         {ticket.ai_response}
+
                       </p>
 
                     </div>
