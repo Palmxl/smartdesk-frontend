@@ -7,6 +7,7 @@ import type { Ticket } from "../types/ticket"
 import { getTickets } from "../services/ticketService"
 
 import TicketsChart from "../components/TicketsChart"
+import AgentPerformanceChart from "../components/AgentPerformanceChart"
 
 const DashboardPage = () => {
 
@@ -96,6 +97,10 @@ const DashboardPage = () => {
         <TicketsChart
           high={highPriorityTickets}
           low={lowPriorityTickets}
+        />
+
+        <AgentPerformanceChart
+          tickets={tickets}
         />
 
       </div>
