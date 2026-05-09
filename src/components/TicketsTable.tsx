@@ -112,6 +112,13 @@ const TicketsTable = ({
                     {ticket.description}
                   </p>
 
+                  <p className="text-xs text-blue-600 mt-1">
+
+                    AI Summary:
+                    {ticket.summary}
+
+                  </p>
+
                 </div>
 
               </td>
