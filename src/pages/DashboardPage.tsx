@@ -10,8 +10,9 @@ import TicketsChart from "../components/TicketsChart"
 
 import AIInsights from "../components/AIInsights"
 
-import AgentPerformanceChart
-  from "../components/AgentPerformanceChart"
+import AgentPerformanceChart from "../components/AgentPerformanceChart"
+
+import ExportReportButton from "../components/ExportReportButton"
 
 const DashboardPage = () => {
 
@@ -69,6 +70,12 @@ const DashboardPage = () => {
       <h1 className="text-3xl font-bold mb-6">
         Dashboard
       </h1>
+
+      <div className="mb-6">
+        <ExportReportButton
+          tickets={tickets}
+        />
+      </div>
 
       <div className="grid grid-cols-4 gap-4">
 
