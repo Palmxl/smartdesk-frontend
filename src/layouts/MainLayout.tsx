@@ -2,6 +2,7 @@ import type { ReactNode } from "react"
 
 import Sidebar from "../components/Sidebar"
 import Topbar from "../components/Topbar"
+import CommandPalette from "../components/CommandPalette"
 
 interface Props {
   children: ReactNode
@@ -26,6 +27,7 @@ const MainLayout = ({
       <main className="ml-64 p-6">
 
         <Topbar />
+        <CommandPalette />
 
         {children}
 
