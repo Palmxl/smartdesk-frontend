@@ -8,6 +8,7 @@ import DashboardPage from "./pages/DashboardPage"
 import TicketsPage from "./pages/TicketsPage"
 import LoginPage from "./pages/LoginPage"
 import ChatPage from "./pages/ChatPage"
+import KanbanPage from "./pages/KanbanPage"
 
 import ProtectedRoute from "./routes/ProtectedRoute"
 
@@ -50,6 +51,15 @@ function App() {
           }
         />
 
+        <Route
+          path="/kanban"
+          element={
+            <ProtectedRoute>
+              <KanbanPage />
+            </ProtectedRoute>
+          }
+        />
+        
       </Routes>
 
     </BrowserRouter>
