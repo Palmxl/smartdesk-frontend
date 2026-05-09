@@ -7,7 +7,9 @@ import type { Ticket } from "../types/ticket"
 import { getTickets } from "../services/ticketService"
 
 import TicketsChart from "../components/TicketsChart"
-import AgentPerformanceChart from "../components/AgentPerformanceChart"
+
+import AgentPerformanceChart
+  from "../components/AgentPerformanceChart"
 
 const DashboardPage = () => {
 
@@ -45,6 +47,20 @@ const DashboardPage = () => {
         ticket.priority === "Low"
     ).length
 
+  const overdueTickets =
+    tickets.filter(
+      (ticket) => {
+
+        return (
+          ticket.sla_deadline
+          && new Date(
+            ticket.sla_deadline
+          ) < new Date()
+          && ticket.status !== "Closed"
+        )
+      }
+    ).length
+
   return (
     <MainLayout>
 
@@ -52,7 +68,7 @@ const DashboardPage = () => {
         Dashboard
       </h1>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-4 gap-4">
 
         <div className="bg-white p-4 rounded-xl shadow">
 
@@ -86,6 +102,18 @@ const DashboardPage = () => {
 
           <p className="text-3xl font-bold text-green-600">
             {closedTickets}
+          </p>
+
+        </div>
+
+        <div className="bg-white p-4 rounded-xl shadow">
+
+          <h2 className="text-gray-500">
+            Overdue Tickets
+          </h2>
+
+          <p className="text-3xl font-bold text-red-600">
+            {overdueTickets}
           </p>
 
         </div>

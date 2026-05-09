@@ -76,6 +76,10 @@ const TicketsTable = ({
             </th>
 
             <th className="text-left p-4">
+              SLA
+            </th>
+
+            <th className="text-left p-4">
               Status
             </th>
 
@@ -147,6 +151,40 @@ const TicketsTable = ({
 
                 {ticket.assigned_to
                   || "Unassigned"}
+
+              </td>
+
+              <td className="p-4">
+
+                <div className="flex flex-col gap-2">
+
+                  <span className="text-sm">
+                    {
+                      ticket.sla_deadline
+                        ? new Date(
+                            ticket.sla_deadline
+                          ).toLocaleString()
+                        : "No SLA"
+                    }
+                  </span>
+
+                  {ticket.sla_deadline
+                    && new Date(
+                      ticket.sla_deadline
+                    ) < new Date()
+                    && ticket.status !== "Closed" && (
+
+                    <Badge
+                      text="Overdue"
+                      color="
+                        bg-red-600
+                        text-white
+                      "
+                    />
+
+                  )}
+
+                </div>
 
               </td>
 
