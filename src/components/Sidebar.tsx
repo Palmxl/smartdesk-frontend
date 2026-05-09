@@ -3,6 +3,7 @@ import {
   Ticket,
   MessageSquare,
   KanbanSquare,
+  Activity,
 } from "lucide-react"
 
 import { Link } from "react-router-dom"
@@ -86,6 +87,25 @@ const Sidebar = () => {
           <KanbanSquare size={20} />
 
           Kanban
+
+        </Link>
+
+        <Link
+          to="/activities"
+          className="
+            flex
+            items-center
+            gap-2
+            p-2
+            rounded-lg
+            hover:bg-gray-800
+            transition
+          "
+        > 
+
+          <Activity size={20} />
+
+          Activity Logs
 
         </Link>
 

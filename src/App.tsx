@@ -9,7 +9,7 @@ import TicketsPage from "./pages/TicketsPage"
 import LoginPage from "./pages/LoginPage"
 import ChatPage from "./pages/ChatPage"
 import KanbanPage from "./pages/KanbanPage"
-
+import ActivityPage from "./pages/ActivityPage"
 import ProtectedRoute from "./routes/ProtectedRoute"
 
 function App() {
@@ -59,7 +59,16 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
+
+        <Route
+          path="/activities"
+          element={
+            <ProtectedRoute>
+              <ActivityPage />
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
 
     </BrowserRouter>
