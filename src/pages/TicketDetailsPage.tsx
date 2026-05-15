@@ -1,6 +1,7 @@
 import {
   useEffect,
   useState,
+  useRef,
 } from "react"
 
 import {
@@ -31,9 +32,32 @@ const TicketDetailsPage = () => {
   const [activities, setActivities] =
     useState<any[]>([])
 
+  const [comments, setComments] =
+    useState<any[]>([])
+
+  const [newComment, setNewComment] =
+    useState("")
+
+  const ws = useRef<WebSocket | null>(
+    null
+  )
+
   useEffect(() => {
 
     loadTicket()
+
+    ws.current = new WebSocket(
+      "ws://127.0.0.1:8000/tickets/ws"
+    )
+
+    ws.current.onmessage = () => {
+
+      loadTicket()
+    }
+
+    return () => {
+      ws.current?.close()
+    }
 
   }, [id])
 
@@ -57,6 +81,15 @@ const TicketDetailsPage = () => {
         activityResponse.data
       )
 
+      const commentsResponse =
+        await api.get(
+          `/tickets/${id}/comments`
+        )
+
+      setComments(
+        commentsResponse.data
+      )
+
     } catch (error) {
 
       console.error(error)
@@ -66,6 +99,36 @@ const TicketDetailsPage = () => {
       setLoading(false)
     }
   }
+
+  const handleAddComment =
+    async () => {
+
+      if (!newComment.trim()) {
+        return
+      }
+
+      try {
+
+        await api.post(
+          `/tickets/${id}/comments`,
+          null,
+          {
+            params: {
+              content:
+                newComment,
+            },
+          }
+        )
+
+        setNewComment("")
+
+        loadTicket()
+
+      } catch (error) {
+
+        console.error(error)
+      }
+    }
 
   if (loading) {
 
@@ -429,6 +492,143 @@ const TicketDetailsPage = () => {
                 ))
 
               )}
+
+            </div>
+
+          </div>
+
+          <div>
+
+            <h3
+              className="
+                text-xl
+                font-bold
+                mb-4
+              "
+            >
+
+              Comments
+
+            </h3>
+
+            <div className="space-y-3 mb-4">
+
+              {comments.length === 0 ? (
+
+                <p
+                  className="
+                    text-gray-500
+                    dark:text-gray-400
+                  "
+                >
+
+                  No comments yet
+
+                </p>
+
+              ) : (
+
+                comments.map((comment) => (
+
+                  <div
+                    key={comment.id}
+                    className="
+                      bg-gray-100
+                      dark:bg-gray-700
+                      rounded-lg
+                      p-3
+                    "
+                  >
+
+                    <p
+                      className="
+                        font-semibold
+                        text-sm
+                      "
+                    >
+
+                      {comment.username}
+
+                    </p>
+
+                    <p
+                      className="
+                        text-sm
+                        mt-1
+                      "
+                    >
+
+                      {comment.content}
+
+                    </p>
+
+                    <p
+                      className="
+                        text-xs
+                        text-gray-500
+                        dark:text-gray-400
+                        mt-2
+                      "
+                    >
+
+                      {
+                        new Date(
+                          comment.created_at
+                        ).toLocaleString()
+                      }
+
+                    </p>
+
+                  </div>
+
+                ))
+
+              )}
+
+            </div>
+
+            <div className="flex gap-2">
+
+              <input
+                type="text"
+                value={newComment}
+                onChange={(e) =>
+                  setNewComment(
+                    e.target.value
+                  )
+                }
+                placeholder="Write a comment..."
+                className="
+                  flex-1
+                  border
+                  border-gray-300
+                  dark:border-gray-700
+                  bg-white
+                  dark:bg-gray-700
+                  text-black
+                  dark:text-white
+                  rounded
+                  p-2
+                "
+              />
+
+              <button
+                onClick={
+                  handleAddComment
+                }
+                className="
+                  bg-black
+                  dark:bg-white
+                  text-white
+                  dark:text-black
+                  px-4
+                  rounded
+                "
+              >
+
+                Send
+
+              </button>
 
             </div>
 
