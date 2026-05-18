@@ -17,7 +17,10 @@ import RegisterPage from "./pages/RegisterPage"
 function App() {
 
   return (
-    <BrowserRouter>
+
+    <BrowserRouter
+      basename="/smartdesk-frontend"
+    >
 
       <Routes>
 
