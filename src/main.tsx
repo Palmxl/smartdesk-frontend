@@ -1,6 +1,3 @@
-import { StrictMode }
-  from "react"
-
 import { createRoot }
   from "react-dom/client"
 
@@ -19,17 +16,14 @@ createRoot(
   document.getElementById("root")!
 ).render(
 
-  <StrictMode>
+  <ThemeProvider>
 
-    <ThemeProvider>
+    <App />
 
-      <App />
+    <Toaster
+      position="top-right"
+    />
 
-      <Toaster
-        position="top-right"
-      />
+  </ThemeProvider>
 
-    </ThemeProvider>
-
-  </StrictMode>
 )

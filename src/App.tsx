@@ -12,6 +12,7 @@ import KanbanPage from "./pages/KanbanPage"
 import ActivityPage from "./pages/ActivityPage"
 import ProtectedRoute from "./routes/ProtectedRoute"
 import TicketDetailsPage from "./pages/TicketDetailsPage"
+import RegisterPage from "./pages/RegisterPage"
 
 function App() {
 
@@ -23,6 +24,11 @@ function App() {
         <Route
           path="/login"
           element={<LoginPage />}
+        />
+
+        <Route
+          path="/register"
+          element={<RegisterPage />}
         />
 
         <Route

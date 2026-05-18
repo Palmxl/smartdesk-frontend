@@ -1,32 +1,19 @@
 import { useState }
   from "react"
 
-import {
-  Moon,
-  Sun,
-} from "lucide-react"
-
 import { useNavigate }
   from "react-router-dom"
 
 import toast
   from "react-hot-toast"
 
-import { login }
-  from "../services/authService"
+import { api }
+  from "../services/api"
 
-import { useTheme }
-  from "../hooks/useTheme"
-
-const LoginPage = () => {
+const RegisterPage = () => {
 
   const navigate =
     useNavigate()
-
-  const {
-    darkMode,
-    toggleTheme,
-  } = useTheme()
 
   const [username, setUsername] =
     useState("")
@@ -34,7 +21,10 @@ const LoginPage = () => {
   const [password, setPassword] =
     useState("")
 
-  const handleLogin = async (
+  const [role, setRole] =
+    useState("agent")
+
+  const handleRegister = async (
     e: React.FormEvent
   ) => {
 
@@ -42,28 +32,27 @@ const LoginPage = () => {
 
     try {
 
-      const data = await login(
-        username,
-        password
-      )
-
-      localStorage.setItem(
-        "token",
-        data.access_token
+      await api.post(
+        "/auth/register",
+        {
+          username,
+          password,
+          role,
+        }
       )
 
       toast.success(
-        "Login successful"
+        "Account created"
       )
 
-      navigate("/")
+      navigate("/login")
 
     } catch (error) {
 
       console.error(error)
 
       toast.error(
-        "Invalid credentials"
+        "Registration failed"
       )
     }
   }
@@ -78,43 +67,14 @@ const LoginPage = () => {
         justify-center
         bg-gray-100
         dark:bg-gray-900
-        transition
-        relative
       "
     >
 
-      <button
-        onClick={toggleTheme}
-        className="
-          absolute
-          top-6
-          right-6
-          p-3
-          rounded-lg
-          bg-white
-          dark:bg-gray-800
-          text-black
-          dark:text-white
-          shadow
-          hover:opacity-90
-          transition
-        "
-      >
-
-        {darkMode
-          ? <Sun size={20} />
-          : <Moon size={20} />
-        }
-
-      </button>
-
       <form
-        onSubmit={handleLogin}
+        onSubmit={handleRegister}
         className="
           bg-white
           dark:bg-gray-800
-          text-black
-          dark:text-white
           p-8
           rounded-xl
           shadow
@@ -128,10 +88,12 @@ const LoginPage = () => {
             font-bold
             mb-6
             text-center
+            text-black
+            dark:text-white
           "
         >
 
-          SmartDesk
+          Create Account
 
         </h1>
 
@@ -149,24 +111,19 @@ const LoginPage = () => {
             className="
               w-full
               border
-              border-gray-300
               dark:border-gray-700
+              p-3
+              rounded
               bg-white
               dark:bg-gray-700
               text-black
               dark:text-white
-              placeholder-gray-400
-              p-3
-              rounded
-              focus:outline-none
-              focus:ring-2
-              focus:ring-blue-500
             "
           />
 
         </div>
 
-        <div className="mb-6">
+        <div className="mb-4">
 
           <input
             type="password"
@@ -180,20 +137,49 @@ const LoginPage = () => {
             className="
               w-full
               border
-              border-gray-300
               dark:border-gray-700
+              p-3
+              rounded
               bg-white
               dark:bg-gray-700
               text-black
               dark:text-white
-              placeholder-gray-400
-              p-3
-              rounded
-              focus:outline-none
-              focus:ring-2
-              focus:ring-blue-500
             "
           />
+
+        </div>
+
+        <div className="mb-6">
+
+          <select
+            value={role}
+            onChange={(e) =>
+              setRole(
+                e.target.value
+              )
+            }
+            className="
+              w-full
+              border
+              dark:border-gray-700
+              p-3
+              rounded
+              bg-white
+              dark:bg-gray-700
+              text-black
+              dark:text-white
+            "
+          >
+
+            <option value="agent">
+              Agent
+            </option>
+
+            <option value="admin">
+              Admin
+            </option>
+
+          </select>
 
         </div>
 
@@ -207,44 +193,12 @@ const LoginPage = () => {
             dark:text-black
             py-3
             rounded
-            hover:opacity-90
-            transition
           "
         >
 
-          Login
+          Register
 
         </button>
-
-        <p
-          className="
-            text-sm
-            text-center
-            mt-4
-            text-gray-600
-            dark:text-gray-300
-          "
-        >
-
-          Don't have an account?
-
-          <span
-            onClick={() =>
-              navigate("/register")
-            }
-            className="
-              ml-2
-              text-blue-500
-              cursor-pointer
-              hover:underline
-            "
-          >
-
-            Register
-
-          </span>
-
-        </p>
 
       </form>
 
@@ -252,4 +206,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+export default RegisterPage

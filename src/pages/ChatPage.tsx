@@ -4,9 +4,6 @@ import {
   useState,
 } from "react"
 
-import toast
-  from "react-hot-toast"
-
 import MainLayout
   from "../layouts/MainLayout"
 
@@ -38,32 +35,57 @@ const ChatPage = () => {
 
   useEffect(() => {
 
-    if (!user) {
+    if (!user?.sub) {
       return
     }
 
     const loadMessages =
       async () => {
 
-        const data =
-          await getMessages()
+        try {
 
-        const formatted =
-          data.map(
-            (msg: any) =>
-              `${msg.username}: ${msg.content}`
-          )
+          const data =
+            await getMessages()
 
-        setMessages(formatted)
+          const formatted =
+            data.map(
+              (msg: any) =>
+                `${msg.username}: ${msg.content}`
+            )
+
+          setMessages(formatted)
+
+        } catch (error) {
+
+          console.error(error)
+        }
       }
 
     loadMessages()
 
-    ws.current = new WebSocket(
-      `ws://127.0.0.1:8000/chat/${user.sub}`
-    )
+    if (
+      ws.current
+      && ws.current.readyState
+      === WebSocket.OPEN
+    ) {
+      return
+    }
 
-    ws.current.onmessage = (
+    const socket =
+      new WebSocket(
+        `ws://127.0.0.1:8000/chat/${user.sub}`
+      )
+
+    ws.current = socket
+
+    socket.onopen = () => {
+
+      console.log(
+        "WebSocket connected"
+      )
+    }
+
+    socket.onmessage = (
       event
     ) => {
 
@@ -83,28 +105,58 @@ const ChatPage = () => {
         return
       }
 
-      toast.success(
-        "New message received"
+      setMessages((prev) => {
+
+        if (
+          prev.includes(
+            event.data
+          )
+        ) {
+          return prev
+        }
+
+        return [
+          ...prev,
+          event.data,
+        ]
+      })
+    }
+
+    socket.onerror = (
+      error
+    ) => {
+
+      console.error(
+        "WebSocket error:",
+        error
+      )
+    }
+
+    socket.onclose = () => {
+
+      console.log(
+        "WebSocket disconnected"
       )
 
-      setMessages((prev) => [
-        ...prev,
-        event.data,
-      ])
+      ws.current = null
     }
 
     return () => {
-      ws.current?.close()
+
+      socket.close()
     }
 
-  }, [user])
+  }, [user?.sub])
 
   const sendMessage = () => {
 
     if (
       !message.trim()
       || !ws.current
+      || ws.current.readyState
+      !== WebSocket.OPEN
     ) {
+
       return
     }
 
