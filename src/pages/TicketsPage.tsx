@@ -54,7 +54,7 @@ const TicketsPage = () => {
     loadTickets()
 
     const ws = new WebSocket(
-      "ws://127.0.0.1:8000/tickets/ws"
+      `${import.meta.env.VITE_WS_URL}/tickets/ws`
     )
 
     ws.onmessage = () => {

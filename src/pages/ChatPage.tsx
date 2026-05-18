@@ -73,7 +73,7 @@ const ChatPage = () => {
 
     const socket =
       new WebSocket(
-        `ws://127.0.0.1:8000/chat/${user.sub}`
+        `${import.meta.env.VITE_WS_URL}/chat/${user.sub}`
       )
 
     ws.current = socket

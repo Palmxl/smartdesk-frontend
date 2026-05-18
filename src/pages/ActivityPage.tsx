@@ -14,7 +14,7 @@ const ActivityPage = () => {
   useEffect(() => {
 
     fetch(
-      "http://127.0.0.1:8000/activities/"
+      `${import.meta.env.VITE_API_URL}/activities/`
     )
       .then((res) => res.json())
       .then(setLogs)
